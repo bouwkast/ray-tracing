@@ -13,7 +13,9 @@
         public byte G { get; }
         public byte B { get; }
 
-        public override string ToString() => $"{R} {G} {B}";
-
+        public override string ToString()
+        {
+            return $"{R} {G} {B}";
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace RayTracing.Core.Image
@@ -90,17 +92,19 @@ namespace RayTracing.Core.Image
                 System.IO.Path.ChangeExtension(path, PPMExtension);
             }
 
-            var imageDataText = $"P3\n{Width} {Height}\n255";
+            var builder = new StringBuilder();
+            builder.AppendLine("P3");
+            builder.AppendLine($"{Width} {Height}");
+            builder.AppendLine("255");
 
             for(int row = 0; row < Width; row++)
             {
                 for (int col = 0; col < Height; col++)
                 {
-                    imageDataText += ImageData[row, col];
+                    builder.AppendLine(ImageData[row, col].ToString());
                 }
             }
-
-            File.WriteAllText(path, imageDataText);
+            File.WriteAllText(path, builder.ToString());
         }
     }
 }
