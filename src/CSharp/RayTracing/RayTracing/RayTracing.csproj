@@ -12,4 +12,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RayTracing.Core\RayTracing.Core.csproj" />
+  </ItemGroup>
+
 </Project>

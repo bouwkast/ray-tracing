@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracing", "RayTracing\Ra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracing.Core", "RayTracing.Core\RayTracing.Core.csproj", "{A484EC05-AC4A-4DAF-A2F0-84F81F681EA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracing.Core.Tests", "RayTracing.Core.Tests\RayTracing.Core.Tests.csproj", "{030E80DC-56CF-4883-BEFD-256218275DD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A484EC05-AC4A-4DAF-A2F0-84F81F681EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A484EC05-AC4A-4DAF-A2F0-84F81F681EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A484EC05-AC4A-4DAF-A2F0-84F81F681EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{030E80DC-56CF-4883-BEFD-256218275DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{030E80DC-56CF-4883-BEFD-256218275DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{030E80DC-56CF-4883-BEFD-256218275DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{030E80DC-56CF-4883-BEFD-256218275DD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
