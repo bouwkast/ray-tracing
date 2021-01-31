@@ -68,7 +68,7 @@ namespace RayTracing.Core.Image
                     var g = (double)col / (Height - 1);
                     var b = 0.25;
 
-                    imageData[row, col] = new Color((byte)(255.999 * r), (byte)(255.999 * g), (byte)(255.999 * b));
+                    imageData[row, col] = new Color(r, g, b);
                 }
             }
 
