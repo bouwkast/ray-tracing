@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace RayTracing.Core.Image
@@ -15,7 +12,7 @@ namespace RayTracing.Core.Image
         public int Height { get; private set; }
         public string Path { get; private set; }
 
-        public Color[,] ImageData { get; private set ; }
+        public Color[,] ImageData { get; private set; }
 
         /// <summary>
         ///     Initializes a default <see cref="PPMImage"/> with the specified <paramref name="width"/> and <paramref name="height"/>.
@@ -24,7 +21,7 @@ namespace RayTracing.Core.Image
         /// <param name="height">The height of the image in pixels.</param>
         public PPMImage(int width, int height)
         {
-            if( width <= 0)
+            if (width <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(width), "Width must be greater than 0");
             }
@@ -51,24 +48,27 @@ namespace RayTracing.Core.Image
                 throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace", nameof(path));
             }
 
-            if(!File.Exists(path))
+            if (!File.Exists(path))
             {
                 throw new FileNotFoundException($"Failed to find the image at {path}");
             }
 
-            Path = path;   
+            Path = path;
         }
 
-        private Color[,] InitializeDefaultImage() {
+        private Color[,] InitializeDefaultImage()
+        {
             var imageData = new Color[Width, Height];
 
-            for(int row = 0; row < Width; row++) {
-                for (int col = 0; col < Height; col++) {
+            for (int row = 0; row < Width; row++)
+            {
+                for (int col = 0; col < Height; col++)
+                {
                     var r = (double)row / (Width - 1);
                     var g = (double)col / (Height - 1);
                     var b = 0.25;
 
-                    imageData[row, col] = new Color((byte)(255.999 * r), (byte)(255.999*g), (byte)(255.999*b));
+                    imageData[row, col] = new Color((byte)(255.999 * r), (byte)(255.999 * g), (byte)(255.999 * b));
                 }
             }
 
@@ -87,7 +87,7 @@ namespace RayTracing.Core.Image
                 throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace", nameof(path));
             }
 
-            if(!System.IO.Path.HasExtension(path) || System.IO.Path.GetExtension(path) != PPMExtension)
+            if (!System.IO.Path.HasExtension(path) || System.IO.Path.GetExtension(path) != PPMExtension)
             {
                 System.IO.Path.ChangeExtension(path, PPMExtension);
             }
@@ -97,7 +97,7 @@ namespace RayTracing.Core.Image
             builder.AppendLine($"{Width} {Height}");
             builder.AppendLine("255");
 
-            for(int row = 0; row < Width; row++)
+            for (int row = 0; row < Width; row++)
             {
                 for (int col = 0; col < Height; col++)
                 {
