@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace RayTracing.Core.Image
@@ -13,6 +14,10 @@ namespace RayTracing.Core.Image
         public string Path { get; private set; }
 
         public Color[,] ImageData { get; private set; }
+        public Vector3 Origin { get; }
+        public Vector3 Horizontal { get; }
+        public Vector3 Vertical { get; }
+        public Vector3 LowerLeftCorner { get; }
 
         /// <summary>
         ///     Initializes a default <see cref="PPMImage"/> with the specified <paramref name="width"/> and <paramref name="height"/>.
@@ -37,6 +42,26 @@ namespace RayTracing.Core.Image
             ImageData = InitializeDefaultImage();
         }
 
+        public PPMImage(int width, int height, Vector3 origin, Vector3 horizontal, Vector3 vertical, Vector3 lowerLeftCorner)
+        {
+            if (width <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(width), "Width must be greater than 0");
+            }
+
+            if (height <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(height), "Height must be greater than 0");
+            }
+            Width = width;
+            Height = height;
+            Origin = origin;
+            Horizontal = horizontal;
+            Vertical = vertical;
+            LowerLeftCorner = lowerLeftCorner;
+            ImageData = InitializeImage();
+        }
+
         /// <summary>
         ///     Loads a <see cref="PPMImage"/> from the specified <paramref name="path"/>.
         /// </summary>
@@ -56,19 +81,39 @@ namespace RayTracing.Core.Image
             Path = path;
         }
 
+        private Color[,] InitializeImage()
+        {
+            var imageData = new Color[Width, Height];
+
+            for (int j = Height-1; j >=0; --j)
+            {
+                for(int i = 0; i < Width; ++i)
+                {
+                    var u = (float)i / Width - 1;
+                    var v = (float)j / Height - 1;
+                    Ray ray = new Ray(Origin, LowerLeftCorner + (u * Horizontal) + (v * Vertical) - Origin);
+                    Color c = new Color(ray);
+                    imageData[i, j] = c;
+
+                }
+            }
+
+            return imageData;
+        }
+
         private Color[,] InitializeDefaultImage()
         {
             var imageData = new Color[Width, Height];
 
-            for (int row = 0; row < Width; row++)
+            for (int j = Height - 1; j >= 0; --j)
             {
-                for (int col = 0; col < Height; col++)
+                for (int i = 0; i < Width; ++i)
                 {
-                    var r = (double)row / (Width - 1);
-                    var g = (double)col / (Height - 1);
+                    var r = (double)i / (Width - 1);
+                    var g = (double)j / (Height - 1);
                     var b = 0.25;
 
-                    imageData[row, col] = new Color(r, g, b);
+                    imageData[i, j] = new Color(r, g, b);
                 }
             }
 
@@ -97,11 +142,11 @@ namespace RayTracing.Core.Image
             builder.AppendLine($"{Width} {Height}");
             builder.AppendLine("255");
 
-            for (int row = 0; row < Width; row++)
+            for (int j = Height - 1; j >= 0; --j)
             {
-                for (int col = 0; col < Height; col++)
+                for (int i = 0; i < Width; ++i)
                 {
-                    builder.AppendLine(ImageData[row, col].ToString());
+                    builder.AppendLine(ImageData[i, j].ToString());
                 }
             }
             File.WriteAllText(path, builder.ToString());
